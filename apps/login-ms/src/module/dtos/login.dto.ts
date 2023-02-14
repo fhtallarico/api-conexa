@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsAlphanumeric,
   IsEmail,
@@ -14,4 +15,9 @@ export class LoginBodyDto {
   @IsAlphanumeric()
   @MinLength(8)
   password: string;
+}
+
+export class TokenDto {
+  @Type(() => String)
+  token: string;
 }

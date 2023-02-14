@@ -51,8 +51,9 @@ export class LoginController {
       throw new HttpException(error.message, error.status);
     }
   }
+
   @UseGuards(JwtAuthGuard)
-  @Get()
+  @Get('users')
   async getUsers(
     @Query('page') page: number,
     @Query('limit') limit: number,
