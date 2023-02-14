@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { LoginBodyDto } from '../dtos/login.dto';
+import { LoginBodyDto, TokenDto } from '../dtos/login.dto';
 import { User, UserDocument } from '../schemas/user.schema';
 import { hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -32,7 +32,7 @@ export class LoginService {
     });
   }
 
-  async loginUser(userBody: LoginBodyDto): Promise<any> {
+  async loginUser(userBody: LoginBodyDto): Promise<TokenDto> {
     try {
       const { mail, password } = userBody;
 
@@ -47,7 +47,7 @@ export class LoginService {
         throw new HttpException('Forbiden', HttpStatus.FORBIDDEN);
 
       const token = await this.generateToken(user);
-      return token;
+      return { token };
     } catch (error) {
       Logger.error(
         LoginService.name +
