@@ -65,16 +65,13 @@ export class LoginService {
     return this.jwtService.sign(payload);
   }
 
-  async getUserList(page, limit, search): Promise</*Partial<User[]>*/ any> {
+  async getUserList(page, limit, search): Promise<any> {
     const data = {
       page,
       limit,
       search,
     };
-    const users = await this.businessClient.send(
-      { cmd: 'get-users-list' },
-      data,
-    );
+    const users = await this.businessClient.emit('get_users_list', data);
     return users;
   }
 }
