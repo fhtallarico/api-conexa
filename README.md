@@ -11,7 +11,6 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
 $ nest start login-ms
 
 $ nest start business-ms
