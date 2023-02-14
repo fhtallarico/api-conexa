@@ -3,8 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import {
   User,
   UserDocument,
-} from 'apps/login-ms/src/module/schemas/user.schema';
+} from '../../../../login-ms/src/module/schemas/user.schema';
 import { Model } from 'mongoose';
+import { GetUsersListBodyDto } from '../dtos/get-users-list.dto';
 
 @Injectable()
 export class BusinessService {
@@ -12,15 +13,16 @@ export class BusinessService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async getUsers(page: number, limit: number, search: string): Promise<User[]> {
-    const searchOptions = search
-      ? { mail: { $regex: search, $options: 'i' } }
+  async getUsers(data: GetUsersListBodyDto): Promise<User[]> {
+    const searchOptions = data.search
+      ? { mail: { $regex: data.search, $options: 'i' } }
       : {};
+
     const users = await this.userModel
       .find(searchOptions, 'mail')
-      .limit(limit)
-      .skip(limit * page);
-    console.log(users);
+      .limit(data.limit)
+      .skip(data.limit * data.page);
+
     return users;
   }
 }

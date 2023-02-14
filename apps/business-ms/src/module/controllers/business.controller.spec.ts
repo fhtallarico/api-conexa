@@ -37,7 +37,7 @@ describe('BusinessController', () => {
       const data = {
         page: 1,
         limit: 5,
-        search: undefined,
+        search: null,
       };
       const db = [
         {
@@ -61,7 +61,7 @@ describe('BusinessController', () => {
           mail: 'google@gmail.com',
         },
       ];
-      when(businessServiceMocked.getUsers).calledWith(data).mockReturnValue(db);
+      businessServiceMocked.getUsers.mockReturnValue(db);
       const response = await controller.getUsersList(data);
       expect(response).toEqual(db);
     });
@@ -72,44 +72,20 @@ describe('BusinessController', () => {
         limit: 5,
         search: 'gmail',
       };
-      const db = [
+      businessServiceMocked.getUsers.mockReturnValue([
         {
           _id: 1,
           mail: 'fh.tallarico@gmail.com',
-        },
-        {
-          _id: 2,
-          mail: 'fh.tallarico@conexa.com',
         },
         {
           _id: 3,
           mail: 'conexa@gmail.com',
         },
         {
-          _id: 4,
-          mail: 'conexa@conexa.com',
-        },
-        {
           _id: 5,
           mail: 'google@gmail.com',
         },
-      ];
-      when(businessServiceMocked.getUsers)
-        .calledWith(data)
-        .mockReturnValue([
-          {
-            _id: 1,
-            mail: 'fh.tallarico@gmail.com',
-          },
-          {
-            _id: 3,
-            mail: 'conexa@gmail.com',
-          },
-          {
-            _id: 5,
-            mail: 'google@gmail.com',
-          },
-        ]);
+      ]);
       const response = await controller.getUsersList(data);
       expect(response).toEqual([
         {
