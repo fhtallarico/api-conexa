@@ -16,3 +16,11 @@ $ nest start login-ms
 $ nest start business-ms
 
 ```
+
+## Testing
+
+```bash
+# development
+$ npm run test
+
+```

@@ -40,12 +40,16 @@ describe('LoginController', () => {
         mail: 'fh.tallarico@gmail.com',
         password: '123456',
       };
-      when(loginServiceMocked.createUser())
-        .callesWith(body)
+      when(loginServiceMocked.createUser)
+        .calledWith(body)
         .mockReturnValue(body);
 
       const response = await controller.createUser(body);
-      expect(response).toEqual(expect.objectContaining(body));
+      expect(response).toEqual({
+        data: body,
+        errorMessage: '',
+        statusCode: 201,
+      });
     });
   });
 
@@ -55,12 +59,16 @@ describe('LoginController', () => {
         mail: 'fh.tallarico@gmail.com',
         password: '123456',
       };
-      when(loginServiceMocked.createUser())
-        .callesWith(body)
+      when(loginServiceMocked.createUser)
+        .calledWith(body)
         .mockReturnValue('token example');
 
       const response = await controller.createUser(body);
-      expect(response).toEqual('token example');
+      expect(response).toEqual({
+        data: 'token example',
+        errorMessage: '',
+        statusCode: 201,
+      });
     });
   });
 });
